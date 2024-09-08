@@ -88,6 +88,12 @@ li {
   cursor: not-allowed;
 }
 
+.tally {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
 .score {
   margin: 22px 0 0 0;
   text-align: center;

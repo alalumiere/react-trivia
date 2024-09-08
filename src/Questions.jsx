@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Confetti from "react-confetti";
 
 const Questions = ({ questions }) => {
   // track the current question
@@ -18,7 +19,7 @@ const Questions = ({ questions }) => {
   // go to next question
   const handleNext = () => {
     if (selectedAnswer === correctAnswer) {
-      setScore(score + 1); // if the answer is correct, increment the score
+      setScore((prevScore) => prevScore + 1); // if the answer is correct, increment the score
     }
 
     if (currentQuestion < questions.length - 1) {
@@ -28,6 +29,7 @@ const Questions = ({ questions }) => {
       //   setShowConfetti(false);
     } else {
       setShowResult(true);
+      setShowConfetti(true);
     }
   };
 
@@ -46,11 +48,18 @@ const Questions = ({ questions }) => {
 
   return (
     <div className="questions-container">
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          colors={["#FF0000", "#FFFFFF", "#0000FF"]}
+        />
+      )}
       {showResult ? (
         <div className="results">
           <h2>Trivia Challenge Complete!</h2>
-          <p>
-            Your Score is: {score} / {questions.length}
+          <p className="tally">
+            Your Final Score is: {score} / {questions.length}
           </p>
         </div>
       ) : (
@@ -91,7 +100,8 @@ const Questions = ({ questions }) => {
           </div>
         </>
       )}
-      <div className="score">Score: {score}</div>
+      {/* Only show the score during the quiz and hide on the result page */}
+      {!showResult && <div className="score">Your Score: {score}</div>}
     </div>
   );
 };
