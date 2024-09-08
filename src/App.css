@@ -10,6 +10,22 @@ body {
   height: 100vh;
 }
 
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin: 0 10px;
+}
+
+.sub-title {
+  margin: 10px 10px 20px 10px;
+  font-size: 20px;
+}
+
 .questions-container {
   width: 500px;
   background: rgba(255, 0, 0, 50%);

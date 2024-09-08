@@ -9,7 +9,14 @@ import Questions from "./Questions";
 import React from "react";
 
 function App() {
-  return <Questions questions={triviaQuestions.questions} />;
+  return (
+    <div className="header">
+      <h1 className="title">Champions of the Pitch Trivia</h1>
+      <p className="sub-title">
+        Relive the greatest moments of USWNT Soccer history!
+      </p>
+      <Questions questions={triviaQuestions.questions} />
+    </div>
+  );
 }
-
 export default App;
