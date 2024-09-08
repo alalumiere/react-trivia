@@ -9,14 +9,23 @@ const Questions = ({ questions }) => {
   const [score, setScore] = useState(0);
   // display score
   const [showResult, setShowResult] = useState(false);
+  // confetti effect
+  const [showConfetti, setShowConfetti] = useState(false);
 
   // destructure the current question
-  const { question, options } = questions[currentQuestion];
+  const { question, options, correctAnswer } = questions[currentQuestion];
 
   // go to next question
   const handleNext = () => {
-    if (currentQuestion < question.length - 1) {
+    if (selectedAnswer === correctAnswer) {
+      setScore(score + 1); // if the answer is correct, increment the score
+    }
+
+    if (currentQuestion < questions.length - 1) {
+      // clear selected answer for the next question
+      setSelectedAnswer(null);
       setCurrentQuestion(currentQuestion + 1);
+      //   setShowConfetti(false);
     } else {
       setShowResult(true);
     }
@@ -33,9 +42,6 @@ const Questions = ({ questions }) => {
   // sets the selected answer when the user clicks on an option
   const answerClick = (answer) => {
     setSelectedAnswer(answer);
-    if (answer === correctAnswer) {
-      setScore(score + 1); // if the answer is correct, increment the score
-    }
   };
 
   return (
@@ -57,7 +63,11 @@ const Questions = ({ questions }) => {
                 onClick={() => answerClick(option)}
                 className={selectedAnswer === option ? "selected-answer" : ""}
               >
-                {option}{" "}
+                {option}
+                {selectedAnswer === option &&
+                  selectedAnswer === correctAnswer && (
+                    <span className="correct-badge">Correct!</span>
+                  )}
               </li> //display the options
             ))}
           </ul>
@@ -71,15 +81,17 @@ const Questions = ({ questions }) => {
             </button>
             <button
               onClick={handleNext}
-              disabled={currentQuestion === question.length - 1}
-              className="back-btn"
+              disabled={selectedAnswer === null}
+              className="next-btn"
             >
-              Next Question
+              {currentQuestion === questions.length - 1
+                ? "Finish"
+                : "Next Question"}
             </button>
           </div>
         </>
       )}
-      <div>Your Score: {score}</div>
+      <div className="score">Score: {score}</div>
     </div>
   );
 };
